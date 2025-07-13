@@ -230,18 +230,24 @@ const LinkManagement = () => {
                       허용 파일
                     </span>
                     <span className="flex flex-wrap gap-1">
-                      {(
-                        FILE_TYPE_OPTIONS.find(
-                          (option) => option.value === link.allowedFileTypeGroup,
-                        )?.extensions || []
-                      ).map((ext) => (
-                        <span
-                          key={ext}
-                          className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-300"
-                        >
-                          {ext}
+                      {link.allowedFileTypeGroup === "all" ? (
+                        <span className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                          전체 허용
                         </span>
-                      ))}
+                      ) : (
+                        (
+                          FILE_TYPE_OPTIONS.find(
+                            (option) => option.value === link.allowedFileTypeGroup,
+                          )?.extensions || []
+                        ).map((ext) => (
+                          <span
+                            key={ext}
+                            className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-300"
+                          >
+                            {ext}
+                          </span>
+                        ))
+                      )}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
