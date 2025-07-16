@@ -5,17 +5,10 @@ import { app } from "electron";
 
 import downloadStore from "../../utils/downloadStore.js";
 
-export function handleChunkReceive({
-  fileId,
-  chunkIndex,
-  totalChunks,
-  chunk,
-  finalSavePath,
-  extension,
-  filename,
-  size,
-  senderName,
-}) {
+export function handleChunkReceive(
+  { fileId, chunkIndex, totalChunks, chunk, finalSavePath, extension, filename, size, senderName },
+  socket,
+) {
   const saveDir = path.join(app.getPath("userData"), "received", fileId);
   if (!fs.existsSync(saveDir)) fs.mkdirSync(saveDir, { recursive: true });
 
@@ -24,11 +17,20 @@ export function handleChunkReceive({
 
   const receivedCount = fs.readdirSync(saveDir).filter((f) => f.startsWith("chunk-")).length;
   if (receivedCount === parseInt(totalChunks, 10)) {
-    mergeChunks(saveDir, finalSavePath, fileId, extension, filename, size, senderName);
+    mergeChunks(saveDir, finalSavePath, fileId, extension, filename, size, senderName, socket);
   }
 }
 
-function mergeChunks(chunkDir, finalSavePath, fileId, extension, filename, size, senderName) {
+function mergeChunks(
+  chunkDir,
+  finalSavePath,
+  fileId,
+  extension,
+  filename,
+  size,
+  senderName,
+  socket,
+) {
   const filenameWithExtension = `${fileId}${extension}`;
   const outputFilePath = path.join(finalSavePath, filenameWithExtension);
   const writeStream = fs.createWriteStream(outputFilePath);
@@ -60,6 +62,9 @@ function mergeChunks(chunkDir, finalSavePath, fileId, extension, filename, size,
     });
 
     downloadStore.set("downloadedFiles", receivedFiles);
+    fs.rmSync(chunkDir, { recursive: true, force: true });
+
+    socket.emit("download-complete", fileId);
   });
 
   writeStream.end();
