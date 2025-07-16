@@ -14,6 +14,7 @@ const MainLayout = () => {
 
   useEffect(() => {
     const handleShow = () => {
+      getLocalRequests();
       showNotification("FlashDrop 알림", "새로운 파일이 도착했습니다.", () => {
         navigate("/fileRequest");
       });
