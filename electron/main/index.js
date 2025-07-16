@@ -9,6 +9,7 @@ import { API_URL, DEV_SERVER_URL } from "../../src/constants.js";
 import downloadStore from "../utils/downloadStore.js";
 import { isDev } from "../utils/isDev.js";
 import linkStore from "../utils/linkStore.js";
+import startFileSync from "../utils/startFileSync.js";
 import uploadRequestStore from "../utils/uploadRequestStore.js";
 
 import { getOrCreateDeviceId } from "./deviceId.js";
@@ -31,17 +32,12 @@ app.on("ready", () => {
 
   const socket = io(API_URL);
 
-  socket.on("connect", () => {
-    const deviceId = getOrCreateDeviceId();
-    socket.emit("register-device", deviceId);
-  });
-
   socket.on("connect_error", (err) => {
     console.error("소켓 연결 오류:", err.message);
   });
 
   socket.on("receive-chunk", (data) => {
-    handleChunkReceive(data);
+    handleChunkReceive(data, socket);
   });
 
   socket.on("request-upload-accept", async (data) => {
@@ -72,6 +68,13 @@ app.on("ready", () => {
   } else {
     mainWindow.loadFile(path.join(app.getAppPath(), "/dist/index.html"));
   }
+
+  mainWindow.webContents.on("did-finish-load", () => {
+    const deviceId = getOrCreateDeviceId();
+    socket.emit("register-device", deviceId);
+
+    startFileSync(socket, mainWindow);
+  });
 
   ipcMain.handle("select-folder", async () => {
     const result = await dialog.showOpenDialog(mainWindow, {
