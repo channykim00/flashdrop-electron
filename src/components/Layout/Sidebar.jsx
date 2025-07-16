@@ -1,5 +1,4 @@
 import { BsInboxesFill } from "react-icons/bs";
-import { IoSettings } from "react-icons/io5";
 import { RiFolderDownloadFill } from "react-icons/ri";
 import { TbBinaryTree2 } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
@@ -52,11 +51,6 @@ const Sidebar = () => {
                 <span className="ml-3 inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-gray-500/10 ring-inset">
                   {requests}
                 </span>
-              </button>
-            </div>
-            <div className="mt-4 border-t border-gray-200 px-1 pt-3">
-              <button className="sidebar-link cursor-pointer">
-                <IoSettings className="mr-3 text-xl" /> 설정
               </button>
             </div>
           </div>
