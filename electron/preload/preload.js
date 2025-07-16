@@ -28,6 +28,10 @@ contextBridge.exposeInMainWorld("api", {
   getUploadRequests: () => ipcRenderer.invoke("get-upload-requests"),
   setUploadRequests: (requests) => ipcRenderer.invoke("set-upload-requests", requests),
 
+  searchLinksByTitle: (query) => ipcRenderer.invoke("search-links-by-title", query),
+  searchDownloadHistory: (query) => ipcRenderer.invoke("search-by-filename", query),
+  searchBySender: (query) => ipcRenderer.invoke("search-by-sender", query),
+
   store: {
     get: (key) => store.get(key),
     set: (key, value) => store.set(key, value),

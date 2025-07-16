@@ -7,6 +7,7 @@ import Home from "@/pages/Home";
 import LinkManagement from "@/pages/LinkManagement";
 import LinkDetail from "@/pages/LinkManagement/LinkDetail";
 import ReceiveFile from "@/pages/ReceiveFile";
+import SearchResults from "@/pages/SearchResults";
 
 function App() {
   return (
@@ -36,6 +37,10 @@ function App() {
           <Route
             path="/fileRequest"
             element={<FileRequest />}
+          />
+          <Route
+            path="/searchResults"
+            element={<SearchResults />}
           />
         </Route>
       </Routes>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import DeletePrompt from "@/components/DeletePrompt";
 import dateFormat from "@/utils/dateFormat";
 import formatFileSize from "@/utils/formatFileSize";
@@ -7,6 +8,31 @@ const FileHistory = () => {
   const [files, setFiles] = useState([]);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [targetFile, setTargetFile] = useState(null);
+  const [highlightedId, setHighlightedId] = useState(null);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.highlightFileId) {
+      setHighlightedId(location.state.highlightFileId);
+    }
+  }, [location.state]);
+
+  useEffect(() => {
+    if (!highlightedId || files.length === 0) return;
+
+    const el = document.getElementById(highlightedId);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      el.classList.add("bg-dodger-blue-100", "transition", "duration-300");
+
+      const timeout = setTimeout(() => {
+        el.classList.remove("bg-dodger-blue-100");
+      }, 1500);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [highlightedId, files]);
 
   useEffect(() => {
     async function fetchHistory() {
@@ -66,7 +92,10 @@ const FileHistory = () => {
                   </tr>
                 )}
                 {files.map((file) => (
-                  <tr key={file.fileId}>
+                  <tr
+                    key={file.fileId}
+                    id={file.fileId}
+                  >
                     <td className="px-3 py-2">
                       {file.senderName ? (
                         <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset">

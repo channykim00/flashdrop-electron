@@ -153,6 +153,30 @@ app.on("ready", () => {
     return all.find((link) => link.uniqueUrl === uniqueUrl) || null;
   });
 
+  ipcMain.handle("search-links-by-title", (event, query) => {
+    const all = linkStore.get("list") || [];
+    const keywords = query.trim().toLowerCase().split(/\s+/);
+
+    return all.filter((link) => {
+      const title = link.title?.toLowerCase() || "";
+      return keywords.every((kw) => title.includes(kw));
+    });
+  });
+
+  ipcMain.handle("search-by-filename", (event, query) => {
+    const all = downloadStore.get("downloadedFiles") || [];
+    const lowerQuery = query.toLowerCase();
+
+    return all.filter((file) => file.originalFilename?.toLowerCase().includes(lowerQuery));
+  });
+
+  ipcMain.handle("search-by-sender", (event, query) => {
+    const all = downloadStore.get("downloadedFiles") || [];
+    const lowerQuery = query.toLowerCase();
+
+    return all.filter((file) => file.senderName?.toLowerCase().includes(lowerQuery));
+  });
+
   ipcMain.handle("open-folder", async (event, folderPath) => {
     try {
       const result = await shell.openPath(folderPath);

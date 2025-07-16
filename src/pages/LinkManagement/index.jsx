@@ -6,6 +6,7 @@ import { IoFlash } from "react-icons/io5";
 import { MdOutlineTimelapse, MdSubtitles, MdAccessTimeFilled } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { TbBinaryTree2 } from "react-icons/tb";
+import { useLocation } from "react-router-dom";
 import { CLIENT_URL } from "../../constants";
 import { API_URL } from "../../constants";
 import DeletePrompt from "@/components/DeletePrompt";
@@ -17,13 +18,20 @@ import remainTimeFormat from "@/utils/remainTimeFormat";
 
 const LinkManagement = () => {
   const [links, setLinks] = useState([]);
-  const [openId, setOpenId] = useState(null);
+  const location = useLocation();
+  const defaultOpenId = location.state?.openId || null;
+  const [openId, setOpenId] = useState(defaultOpenId);
   const [editingLink, setEditingLink] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [successTitle, setSuccessTitle] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
+  useEffect(() => {
+    if (location.state?.openId) {
+      setOpenId(location.state.openId);
+    }
+  }, [location.state?.openId]);
 
   useEffect(() => {
     window.api.getLinkList().then((loadedLinks) => {
