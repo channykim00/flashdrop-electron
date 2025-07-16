@@ -1,5 +1,4 @@
 import { FaSearch } from "react-icons/fa";
-import { IoIosNotificationsOutline } from "react-icons/io";
 
 const Header = () => {
   return (
@@ -14,16 +13,6 @@ const Header = () => {
         <div className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-gray-400">
           <FaSearch className="h-4 w-4" />
         </div>
-      </div>
-
-      <div className="mr-4 flex items-center space-x-4">
-        <button
-          type="button"
-          aria-label="Notifications"
-          className="text-2xl text-gray-600 transition hover:text-gray-800"
-        >
-          <IoIosNotificationsOutline />
-        </button>
       </div>
     </div>
   );
