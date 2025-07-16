@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
-import { FaFolderOpen } from "react-icons/fa";
-import { FaFile } from "react-icons/fa";
-import { FaLink } from "react-icons/fa6";
-import { FaFloppyDisk } from "react-icons/fa6";
+import { FaFolderOpen, FaFile } from "react-icons/fa";
+import { FaLink, FaFloppyDisk } from "react-icons/fa6";
 import { IoIosPerson } from "react-icons/io";
-import { MdAccessTimeFilled } from "react-icons/md";
-import { MdOutlineTimelapse, MdSubtitles } from "react-icons/md";
+import { IoFlash } from "react-icons/io5";
+import { MdOutlineTimelapse, MdSubtitles, MdAccessTimeFilled } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { TbBinaryTree2 } from "react-icons/tb";
 import { CLIENT_URL } from "../../constants";
@@ -93,7 +91,9 @@ const LinkManagement = () => {
       alert("링크 업데이트 중 오류가 발생했습니다.");
     }
   };
-
+  const isLinkExpired = (link) => {
+    return remainTimeFormat(link.createdAt, link.expireTime) === "만료됨";
+  };
   return (
     <div>
       {deleteTarget && (
@@ -214,7 +214,7 @@ const LinkManagement = () => {
                       비밀번호
                     </span>
                     <span className={link.password ? "font-medium text-red-600" : "text-gray-600"}>
-                      {link.password ? "설정됨" : "없음"}
+                      {link.password ? "🟢" : "🔴"}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -222,7 +222,14 @@ const LinkManagement = () => {
                       <IoIosPerson />
                       이름 요구
                     </span>
-                    <span>{link.requireSenderName ? "필수" : "선택"}</span>
+                    <span>{link.requireSenderName ? "🟢" : "🔴"}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="flex w-32 items-center gap-1 text-gray-500">
+                      <IoFlash />
+                      자동 수락
+                    </span>
+                    <span>{link.autoAccept ? "🟢" : "🔴"}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="flex w-32 items-center gap-1 text-gray-500">
@@ -258,12 +265,14 @@ const LinkManagement = () => {
                     <span>{formatFileSize(link.maxFileSize)}</span>
                   </div>
                   <div className="flex pt-4">
-                    <button
-                      className="bg-dodger-blue-600 hover:bg-dodger-blue-700 mr-2 cursor-pointer rounded px-4 py-1.5 text-sm text-white"
-                      onClick={() => handleEditLink(link)}
-                    >
-                      설정 수정
-                    </button>
+                    {!isLinkExpired(link) && (
+                      <button
+                        className="bg-dodger-blue-600 hover:bg-dodger-blue-700 mr-2 cursor-pointer rounded px-4 py-1.5 text-sm text-white"
+                        onClick={() => handleEditLink(link)}
+                      >
+                        설정 수정
+                      </button>
+                    )}
                     <button
                       className="cursor-pointer rounded bg-red-500 px-4 py-1.5 text-sm text-white hover:bg-red-600"
                       onClick={() => setDeleteTarget(link)}
