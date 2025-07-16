@@ -1,4 +1,5 @@
 import { BsInboxesFill } from "react-icons/bs";
+import { API_URL } from "@/constants";
 import useUploadRequestStore from "@/stores/useUploadRequestStore";
 import dateFormat from "@/utils/dateFormat";
 import formatFileSize from "@/utils/formatFileSize";
@@ -10,8 +11,22 @@ const FileRequest = () => {
     window.api.sendAcceptedUpload(uploadData);
     removeRequest(uploadData.fileId);
   };
-  const handleDeclineFile = (uploadData) => {
-    removeRequest(uploadData.fileId);
+  const handleDeclineFile = async (uploadData) => {
+    try {
+      const response = await fetch(`${API_URL}/api/uploaded-file/${uploadData.fileId}`, {
+        method: "DELETE",
+      });
+
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.message || "파일 삭제 실패");
+      }
+
+      removeRequest(uploadData.fileId);
+    } catch (error) {
+      console.error("파일 삭제 중 오류:", error);
+    }
   };
   return (
     <div>
