@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { BsInboxesFill } from "react-icons/bs";
+import DeletePrompt from "@/components/DeletePrompt";
 import { API_URL } from "@/constants";
 import useUploadRequestStore from "@/stores/useUploadRequestStore";
 import dateFormat from "@/utils/dateFormat";
@@ -6,6 +8,8 @@ import formatFileSize from "@/utils/formatFileSize";
 
 const FileRequest = () => {
   const { requests, removeRequest } = useUploadRequestStore();
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [targetRequest, setTargetRequest] = useState(null);
 
   const handleAcceptFile = (uploadData) => {
     window.api.sendAcceptedUpload(uploadData);
@@ -24,12 +28,24 @@ const FileRequest = () => {
       }
 
       removeRequest(uploadData.fileId);
+      setIsDeleteOpen(false);
     } catch (error) {
       console.error("파일 삭제 중 오류:", error);
     }
   };
   return (
     <div>
+      {isDeleteOpen && (
+        <DeletePrompt
+          title="파일 거절"
+          message={`"${targetRequest?.filename}" 파일을 거절하시겠습니까? 다시 다운로드할 수 없습니다.`}
+          onCancel={() => {
+            setIsDeleteOpen(false);
+            setTargetRequest(null);
+          }}
+          onDelete={() => handleDeclineFile(targetRequest)}
+        />
+      )}
       <h1 className="flex items-center gap-2 text-2xl font-bold text-gray-800">
         <BsInboxesFill className="mr-3" />
         파일 받기 링크 생성
@@ -73,7 +89,10 @@ const FileRequest = () => {
                       <div className="flex justify-end gap-2">
                         <button
                           className="cursor-pointer rounded-lg border border-gray-300 px-3 py-1 text-xs text-gray-600 transition hover:bg-gray-100"
-                          onClick={() => handleDeclineFile(requests)}
+                          onClick={() => {
+                            setTargetRequest(requests);
+                            setIsDeleteOpen(true);
+                          }}
                         >
                           거절
                         </button>
