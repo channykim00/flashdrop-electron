@@ -132,10 +132,7 @@ FlashDrop의 Electron 데스크탑 앱은 파일 전송 요청, 수락/거절 �
 ## 🎬 링크 생성부터 전송까지 한눈에 보기
 
 <p align="center">
-  <video width="800" controls>
-    <source src="https://github.com/channykim00/flashdrop-electron/blob/develop/src/assets/readme/preview.mp4?raw=true" type="video/mp4" />
-    브라우저가 video 태그를 지원하지 않습니다.
-  </video>
+  <img width="800px" src="https://github.com/channykim00/flashdrop-electron/blob/develop/src/assets/readme/preview.gif?raw=true" alt="FlashDrop 미리보기" />
 </p>
 
 1. **링크 생성**
