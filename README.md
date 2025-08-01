@@ -1,7 +1,7 @@
 <div align="center">
   <h1>⚡ FlashDrop</h1>
 
-![FlashDrop Header](./src/assets/readme/header.png)
+![FlashDrop Header](https://github.com/channykim00/flashdrop-electron/blob/develop/src/assets/readme/header.png?raw=true)
 
   <p><b>FlashDrop</b>은 파일 공유가 필요한 사용자들이 복잡한 로그인이나 클라우드 절차 없이, 고유 링크를 통해 빠르게 파일을 전송하고 수락할 수 있도록 도와주는 실시간 전송 서비스입니다.</p>
 
@@ -94,19 +94,19 @@ FlashDrop은 짧은 시간 안에 수신 링크를 생성하고, 해당 링크�
 
 서버-클라이언트 간 실시간 통신을 위한 Socket.IO 도입 이유는 다음과 같습니다:
 
-처음에는 웹에서 바로 클라이언트로 파일을 빠르게 전송하는 방식을 고민했으나, 파일 받는 사람의 컴퓨터가 꺼져있을 수 있는 상황을 대비해 서버와 데스크톱 앱 간 Socket.IO 연결을 구축했습니다.  
+처음에는 웹에서 바로 클라이언트로 파일을 빠르게 전송하는 방식을 고민했으나, 파일 받는 사람의 컴퓨터가 꺼져있을 수 있는 상황을 대비해 서버와 데스크톱 앱 간 Socket.IO 연결을 구축했습니다.
 이로 인해 받는 사람은 컴퓨터가 꺼져있어도 나중에 컴퓨터를 켜고 앱을 실행하여 백엔드 서버와 동기화할 수 있으며, 꺼져있던 동안 받은 파일 목록을 확인할 수 있게 되었습니다.
 
-- **서버 ↔ 클라이언트 간 1:1 소켓 연결**  
+- **서버 ↔ 클라이언트 간 1:1 소켓 연결**
   각 클라이언트(Electron 앱)는 고유 deviceId를 기반으로 서버에 연결되고, 서버는 해당 클라이언트와 실시간으로 데이터를 주고받으며 파일 청크 전송 상태, 수락/거절 알림 등을 관리합니다.
 
-- **중앙 서버 중계 방식의 안정성 제공 및 오프라인 수신 지원**  
+- **중앙 서버 중계 방식의 안정성 제공 및 오프라인 수신 지원**
   받는 사람의 컴퓨터가 꺼져 있어도 서버가 중간에서 상태를 유지하여, 나중에 컴퓨터를 켜고 앱을 실행했을 때 파일 수신 목록을 동기화하고 확인할 수 있도록 안정적인 파일 전송 환경을 제공합니다.
 
-- **네트워크 장애 대응 및 자동 재연결**  
+- **네트워크 장애 대응 및 자동 재연결**
   Socket.IO의 내장된 자동 재연결 기능 덕분에 네트워크 불안정 상황에서도 연결이 끊기지 않고 신속하게 복구되어 원활한 파일 전송이 가능합니다.
 
-- **WebSocket 기반의 빠른 응답성 및 리소스 효율성**  
+- **WebSocket 기반의 빠른 응답성 및 리소스 효율성**
   HTTP 폴링 대비 지연 시간을 획기적으로 줄이고 서버 자원도 효율적으로 사용하여 실시간성 높은 사용자 경험을 제공합니다.
 
 #### Zustand 선택 이유
@@ -115,16 +115,16 @@ Electron 앱 내 전역 상태 관리의 단순화와 성능 최적화를 위해
 
 FlashDrop의 Electron 데스크탑 앱은 파일 전송 요청, 수락/거절 상태, 로컬에 저장된 업로드 요청 목록 등 여러 상태를 관리해야 합니다. 이러한 상태들은 앱 전체에서 실시간으로 공유되고 변경되어야 하므로, 효과적인 전역 상태 관리가 필수적이었습니다.
 
-- **경량화 및 단순성**  
+- **경량화 및 단순성**
   Zustand는 Redux 등 복잡한 상태 관리 라이브러리에 비해 설정과 사용법이 매우 간단하며, 불필요한 보일러플레이트 코드를 줄여 개발 생산성을 높였습니다.
 
-- **빠른 상태 업데이트와 최소한의 리렌더링**  
+- **빠른 상태 업데이트와 최소한의 리렌더링**
   내부적으로 불변성 관리와 셀렉터를 지원해, 상태 변경 시 필요한 컴포넌트만 효율적으로 업데이트할 수 있어 앱 성능 최적화에 기여합니다.
 
-- **Electron API와의 손쉬운 연동**  
+- **Electron API와의 손쉬운 연동**
   Zustand 상태 변경 시 Electron의 로컬 저장소 API와 동기화하는 패턴을 자연스럽게 구현할 수 있어, 앱이 종료되거나 재실행 되어도 상태를 복원할 수 있었습니다.
 
-- **비동기 상태 초기화 지원**  
+- **비동기 상태 초기화 지원**
   앱 시작 시 로컬 저장소에서 이전 상태를 비동기적으로 불러와 초기 상태로 세팅하는 작업을 쉽게 처리할 수 있습니다.
 
 <br>
@@ -132,13 +132,16 @@ FlashDrop의 Electron 데스크탑 앱은 파일 전송 요청, 수락/거절 �
 ## 🎬 링크 생성부터 전송까지 한눈에 보기
 
 <p align="center">
-  <img width="800px" src="https://github.com/channykim00/flashdrop-electron/blob/develop/src/assets/readme/preview.gif?raw=true" alt="FlashDrop 링크 생성 및 전송 흐름" />
+  <video width="800" controls>
+    <source src="https://github.com/channykim00/flashdrop-electron/blob/develop/src/assets/readme/preview.mp4?raw=true" type="video/mp4" />
+    브라우저가 video 태그를 지원하지 않습니다.
+  </video>
 </p>
 
-1. **링크 생성**  
+1. **링크 생성**
    로그인 없이도 간단한 설정만으로 수신용 링크를 생성할 수 있습니다.
 
-2. **링크 공유**  
+2. **링크 공유**
    생성된 고유 URL을 상대방에게 공유하면, 별도 앱 설치 없이 웹에서 파일을 업로드할 수 있습니다.
 
 <br>
@@ -151,7 +154,7 @@ FlashDrop의 Electron 데스크탑 앱은 파일 전송 요청, 수락/거절 �
   <img width="800px" src="https://github.com/channykim00/flashdrop-electron/blob/develop/src/assets/readme/link-create.gif?raw=true" />
 </p>
 
-FlashDrop은 누구나 사용할 수 있는 **고유 전송 링크 생성 기능**을 제공합니다.  
+FlashDrop은 누구나 사용할 수 있는 **고유 전송 링크 생성 기능**을 제공합니다.
 복잡한 회원가입이나 인증 없이도, 개인 수신 링크를 생성하여 손쉽게 파일을 받을 수 있습니다.
 
 링크를 생성할 때 다음과 같은 옵션들을 통해 **수신 방식과 보안 정책을 세밀하게 제어**할 수 있습니다:
@@ -164,7 +167,7 @@ FlashDrop은 누구나 사용할 수 있는 **고유 전송 링크 생성 기능
 - ⚙️ **자동 수락 모드**: 수신자가 별도의 승인 없이 자동으로 파일을 저장합니다.
   > 반복적인 수신 상황 (예: 과제 제출, 이미지 수집 등)에 유용하게 활용할 수 있습니다.
 
-링크를 생성하면 즉시 고유 주소(예: `https://flash-drop.online/cgHce2rDTk`)가 발급되며,  
+링크를 생성하면 즉시 고유 주소(예: `https://flash-drop.online/cgHce2rDTk`)가 발급되며,
 해당 링크를 공유하면 **상대방이 직접 파일을 업로드**할 수 있습니다.
 
 전송자는 **Electron 앱**을 통해
@@ -178,64 +181,60 @@ FlashDrop은 누구나 사용할 수 있는 **고유 전송 링크 생성 기능
   <img width="600px" src="https://github.com/channykim00/flashdrop-electron/blob/develop/src/assets/readme/edit-link.png?raw=true" alt="파일 수신 링크 수정 화면" />
 </p>
 
-생성된 수신 링크의 URL을 제외한 모든 설정을 언제든지 변경할 수 있습니다.  
+생성된 수신 링크의 URL을 제외한 모든 설정을 언제든지 변경할 수 있습니다.
 변경된 내용은 실시간으로 링크에 즉시 반영되어 즉각적으로 적용됩니다.
 
-수신 링크의 **제목**, **만료 시간**, **비밀번호**, **접근 권한**뿐만 아니라  
-수신자 **전송자 이름 받기**, **허용 파일 형식**, **자동 수락** 여부 등도 손쉽게 수정하여  
+수신 링크의 **제목**, **만료 시간**, **비밀번호**, **접근 권한**뿐만 아니라
+수신자 **전송자 이름 받기**, **허용 파일 형식**, **자동 수락** 여부 등도 손쉽게 수정하여
 유연하고 안전하게 파일 수신 환경을 관리할 수 있습니다.
 
 ### 📤 파일 보내기 (드래그 앤 드롭 지원)
 
-<table>
-  <tr>
-    <th align="center">📤 보내는 사람</th>
-    <th align="center">📥 받는 사람</th>
-  </tr>
-  <tr>
-    <td align="center">
-     <img width="500px" src="https://github.com/channykim00/flashdrop-electron/blob/develop/src/assets/readme/file-upload.gif?raw=true" alt="파일 업로드 드래그 앤 드롭 화면" />
-      <br/>
-      <sub>드래그 앤 드롭으로 파일을 업로드 하는 보내는 사람 화면</sub>
-    </td>
-    <td align="center">
-      <img width="500px" src="https://github.com/channykim00/flashdrop-electron/blob/develop/src/assets/readme/file-receive.png?raw=true" alt="받는 사람 화면" />
-      <br/>
-      <sub>파일을 받은 수신자의 파일 요청함 화면</sub>
-    </td>
-  </tr>
-</table>
+<p align="center">
+  <img width="600px" src="https://github.com/channykim00/flashdrop-electron/blob/develop/src/assets/readme/file-upload.gif?raw=true" alt="파일 업로드 드래그 앤 드롭 화면" />
+  <br/>
+  <sub>📤 드래그 앤 드롭으로 파일을 업로드 하는 보내는 사람 화면 (gif)</sub>
+</p>
 
-**손쉬운 전송 UI로 빠르게 업로드**  
-직관적인 드래그 앤 드롭 인터페이스를 통해  
-파일을 마우스로 끌어놓기만 하면 간편하게 전송할 수 있습니다.  
+<br/>
+
+<p align="center">
+  <img width="600px" src="https://github.com/channykim00/flashdrop-electron/blob/develop/src/assets/readme/file-receive.png?raw=true" alt="파일 수신자 요청함 화면" />
+  <br/>
+  <sub>📥 파일을 받은 수신자의 요청함 화면 (사진)</sub>
+</p>
+
+**손쉬운 전송 UI로 빠르게 업로드**
+직관적인 드래그 앤 드롭 인터페이스를 통해
+파일을 마우스로 끌어놓기만 하면 간편하게 전송할 수 있습니다.
 복잡한 과정 없이 누구나 쉽게 사용할 수 있는 사용자 친화적인 경험을 제공합니다.
 
 ### 🔍 파일/링크/사용자 통합 검색
 
-필요한 항목을 빠르게 탐색 가능 – 업로드된 파일, 생성한 링크, 사용자 정보를  
+필요한 항목을 빠르게 탐색 가능 – 업로드된 파일, 생성한 링크, 사용자 정보를
 **통합 검색**을 통해 효율적으로 찾을 수 있습니다.
 
-<table>
-  <tr>
-    <td align="center">
-      <img width="280px" src="https://github.com/channykim00/flashdrop-electron/blob/develop/src/assets/readme/search-title.png?raw=true" alt="링크 제목 검색" />
-      <div>🔗 링크 제목으로 검색</div>
-    </td>
-    <td align="center">
-      <img width="280px" src="https://github.com/channykim00/flashdrop-electron/blob/develop/src/assets/readme/search-sender.png?raw=true" alt="보낸이 검색" />
-      <div>👤 보낸이로 검색</div>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" colspan="2">
-      <img width="280px" src="https://github.com/channykim00/flashdrop-electron/blob/develop/src/assets/readme/search-filename.png?raw=true" alt="파일 이름 검색" />
-      <div>📄 파일 이름으로 검색</div>
-    </td>
-  </tr>
-</table>
+<br/>
 
-사용자는 키워드 입력만으로도 원하는 파일, 보낸 사람, 또는 링크를  
+<p align="center">
+  <img width="600px" src="https://github.com/channykim00/flashdrop-electron/blob/develop/src/assets/readme/search-title.png?raw=true" alt="링크 제목 검색" />
+  <br/>
+  <sub>🔗 링크 제목으로 검색</sub>
+</p>
+
+<p align="center">
+  <img width="600px" src="https://github.com/channykim00/flashdrop-electron/blob/develop/src/assets/readme/search-sender.png?raw=true" alt="보낸이 검색" />
+  <br/>
+  <sub>👤 보낸이로 검색</sub>
+</p>
+
+<p align="center">
+  <img width="600px" src="https://github.com/channykim00/flashdrop-electron/blob/develop/src/assets/readme/search-filename.png?raw=true" alt="파일 이름 검색" />
+  <br/>
+  <sub>📄 파일 이름으로 검색</sub>
+</p>
+
+사용자는 키워드 입력만으로도 원하는 파일, 보낸 사람, 또는 링크를
 빠르게 찾아볼 수 있어 불필요한 스크롤 없이 효율적인 탐색이 가능합니다.
 
 모든 검색은 실시간으로 반응합니다.
