@@ -22,7 +22,7 @@ const MainLayout = () => {
 
     const handleAuto = (event, data) => {
       showNotification("다운로드 진행중", `${data.filename}을 다운로드 중입니다.`, () => {
-        navigate("/fileRequest");
+        navigate("/fileHistory");
       });
     };
 
