@@ -52,7 +52,7 @@ const FileHistory = () => {
   };
 
   return (
-    <div className="mx-auto p-6">
+    <div>
       {isDeleteOpen && (
         <DeletePrompt
           title="파일 기록 삭제"
