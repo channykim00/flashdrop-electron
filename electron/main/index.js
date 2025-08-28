@@ -5,13 +5,13 @@ import { fileURLToPath } from "url";
 import { app, BrowserWindow, ipcMain, dialog, shell } from "electron";
 import { io } from "socket.io-client";
 
-import { API_URL, DEV_SERVER_URL } from "../../src/constants.js";
 import downloadStore from "../utils/downloadStore.js";
 import { isDev } from "../utils/isDev.js";
 import linkStore from "../utils/linkStore.js";
 import startFileSync from "../utils/startFileSync.js";
 import uploadRequestStore from "../utils/uploadRequestStore.js";
 
+import { API_URL, DEV_SERVER_URL } from "./constants.js";
 import { getOrCreateDeviceId } from "./deviceId.js";
 import { handleChunkReceive } from "./handlers/fileReceiver.js";
 
@@ -20,8 +20,8 @@ const __dirname = path.dirname(__filename);
 
 app.on("ready", () => {
   const mainWindow = new BrowserWindow({
-    minWidth: 750,
-    minHeight: 400,
+    width: 1200,
+    height: 550,
     webPreferences: {
       preload: path.join(__dirname, "../preload/preload.js"),
       contextIsolation: true,
