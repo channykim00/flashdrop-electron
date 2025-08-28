@@ -6,7 +6,7 @@ const Home = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-800">FlashDrop으로 파일 주고받기</h1>
+      <h1 className="text-2xl font-bold text-gray-800">FlashDrop으로 파일 받기</h1>
 
       <section className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
         <button
