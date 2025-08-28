@@ -48,7 +48,7 @@ const FileRequest = () => {
       )}
       <h1 className="flex items-center gap-2 text-2xl font-bold text-gray-800">
         <BsInboxesFill className="mr-3" />
-        파일 받기 링크 생성
+        파일 요청함
       </h1>
       <section className="mt-6">
         <div className="rounded-lg bg-white p-5 shadow">
