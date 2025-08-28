@@ -1,5 +1,7 @@
 {
   "name": "FlashDrop",
+  "description": "FlashDrop: 간편한 파일 공유 데스크톱 앱",
+  "author": "김찬 <kimchan.dev@gmail.com>",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -8,7 +10,10 @@
     "dev:react": "vite",
     "dev:electron": "cross-env NODE_ENV=development electron .",
     "dev": "npm-run-all --parallel dev:react dev:electron",
-    "build": "cross-env NODE_ENV=production vite build && electron-builder -c electron-builder.json",
+    "build:react": "cross-env NODE_ENV=production vite build",
+    "build:electron": "cross-env NODE_ENV=production electron-builder",
+    "build": "npm run build:react && npm run build:electron",
+    "build:win": "electron-builder --win",
     "lint": "eslint .",
     "preview": "vite preview",
     "prepare": "husky install"
@@ -60,12 +65,32 @@
     ]
   },
   "build": {
+    "appId": "com.flashdrop.app",
+    "productName": "FlashDrop",
+    "asar": true,
     "files": [
-      "dist/",
-      "electron/"
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
     ],
     "directories": {
       "output": "release"
+    },
+    "win": {
+      "icon": "build/icon.ico",
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "build/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage"
     }
   }
 }
