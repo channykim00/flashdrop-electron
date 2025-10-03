@@ -7,26 +7,29 @@ import { MdOutlineTimelapse, MdSubtitles, MdAccessTimeFilled } from "react-icons
 import { RiLockPasswordFill } from "react-icons/ri";
 import { TbBinaryTree2 } from "react-icons/tb";
 import { useLocation } from "react-router-dom";
-import { CLIENT_URL } from "../../constants";
-import { API_URL } from "../../constants";
+
+import { CLIENT_URL, API_URL } from "../../constants";
+
 import DeletePrompt from "@/components/DeletePrompt";
 import SuccessModal from "@/components/SuccessModal";
 import { FILE_TYPE_OPTIONS } from "@/constants";
 import EditLinkModal from "@/pages/LinkManagement/EditLinkModal";
+import type { LinkData } from "@/types/link";
 import formatFileSize from "@/utils/formatFileSize";
 import remainTimeFormat from "@/utils/remainTimeFormat";
 
 const LinkManagement = () => {
-  const [links, setLinks] = useState([]);
+  const [links, setLinks] = useState<LinkItem[]>([]);
   const location = useLocation();
   const defaultOpenId = location.state?.openId || null;
   const [openId, setOpenId] = useState(defaultOpenId);
-  const [editingLink, setEditingLink] = useState(null);
+  const [editingLink, setEditingLink] = useState<LinkItem | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [successTitle, setSuccessTitle] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [deleteTarget, setDeleteTarget] = useState(null);
+  const [deleteTarget, setDeleteTarget] = useState<LinkItem | null>(null);
+
   useEffect(() => {
     if (location.state?.openId) {
       setOpenId(location.state.openId);
@@ -39,14 +42,15 @@ const LinkManagement = () => {
     });
   }, []);
 
-  const handleEditLink = (link) => {
+  const handleEditLink = (link: LinkItem) => {
     setEditingLink(link);
     setIsEditModalOpen(true);
   };
 
   const handleDeleteLink = async () => {
+    if (!deleteTarget) return;
     try {
-      const response = await fetch(`${API_URL}/api/links/${deleteTarget.uniqueUrl}`, {
+      const response = await fetch(`${API_URL}/api/links/${deleteTarget?.uniqueUrl}`, {
         method: "DELETE",
       });
       const result = await response.json();
@@ -66,7 +70,7 @@ const LinkManagement = () => {
     }
   };
 
-  const handleSaveLink = async (updatedLink) => {
+  const handleSaveLink = async (updatedLink: LinkItem) => {
     try {
       const response = await fetch(`${API_URL}/api/links/${updatedLink.uniqueUrl}`, {
         method: "PATCH",
@@ -99,7 +103,7 @@ const LinkManagement = () => {
       alert("링크 업데이트 중 오류가 발생했습니다.");
     }
   };
-  const isLinkExpired = (link) => {
+  const isLinkExpired = (link: LinkItem) => {
     return remainTimeFormat(link.createdAt, link.expireTime) === "만료됨";
   };
   return (
@@ -119,11 +123,15 @@ const LinkManagement = () => {
           onClose={() => setShowSuccessModal(false)}
         />
       )}
-      {isEditModalOpen && (
+      {isEditModalOpen && editingLink && (
         <EditLinkModal
-          link={editingLink}
+          link={editingLink as LinkData} // LinkItem → LinkData로 타입 캐스팅
           onClose={() => setIsEditModalOpen(false)}
-          onSave={handleSaveLink}
+          onSave={(updatedLink: LinkData) => {
+            if (!editingLink) return;
+            const mergedLink: LinkItem = { ...editingLink, ...updatedLink }; // 병합
+            handleSaveLink(mergedLink);
+          }}
         />
       )}
       <h1 className="flex items-center gap-2 text-2xl font-bold text-gray-800">

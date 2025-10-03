@@ -1,4 +1,5 @@
 import { FaSearch } from "react-icons/fa";
+
 import useSearchStore from "@/stores/searchStore";
 
 const SearchResults = () => {

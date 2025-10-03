@@ -1,10 +1,16 @@
 import { BiError } from "react-icons/bi";
 
+interface ErrorModalProps {
+  errorTitle?: string;
+  errorMessage?: string;
+  onClose: () => void;
+}
+
 const ErrorModal = ({
   errorTitle = "오류 발생",
   errorMessage = "예기치 못한 오류가 발생했습니다. 다시 시도해주세요.",
   onClose,
-}) => {
+}: ErrorModalProps) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
       <div className="relative w-full max-w-lg transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all">

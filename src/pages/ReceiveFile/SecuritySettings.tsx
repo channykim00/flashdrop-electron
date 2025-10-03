@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { MdOutlineSecurity } from "react-icons/md";
+
 import useLinkStore from "@/stores/linkStore";
 
 const SecuritySettings = () => {

@@ -1,4 +1,4 @@
-import { API_URL } from "../../src/constants.js";
+import { API_URL } from "../main/constants.js";
 
 import downloadStore from "./downloadStore.js";
 import linkStore from "./linkStore.js";

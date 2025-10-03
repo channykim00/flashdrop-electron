@@ -1,10 +1,16 @@
 import { BiCheckCircle } from "react-icons/bi";
 
+interface SuccessModalProps {
+  successTitle?: string;
+  successMessage?: string;
+  onClose: () => void;
+}
+
 const SuccessModal = ({
   successTitle = "성공!",
   successMessage = "작업이 성공적으로 완료되었습니다.",
   onClose,
-}) => {
+}: SuccessModalProps) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
       <div className="relative w-full max-w-lg transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all">

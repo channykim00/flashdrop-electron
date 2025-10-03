@@ -1,4 +1,7 @@
-export default function remainTimeFormat(createdAt, expireTime) {
+export default function remainTimeFormat(
+  createdAt: string | number | Date,
+  expireTime: number,
+): string | null {
   if (!expireTime || expireTime <= 0) return null;
 
   const created = new Date(createdAt);

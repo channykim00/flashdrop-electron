@@ -1,6 +1,6 @@
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
-import MainLayout from "@/components/layout/MainLayout";
 
+import MainLayout from "@/components/Layout/MainLayout";
 import FileHistory from "@/pages/FileHistory";
 import FileRequest from "@/pages/FileRequest";
 import Home from "@/pages/Home";

@@ -1,4 +1,10 @@
-const FolderPathDisplay = ({ folderPath, onOpenFolder, onChangePath }) => {
+interface FolderPathDisplayProps {
+  folderPath: string;
+  onOpenFolder: () => void;
+  onChangePath: () => void;
+}
+
+const FolderPathDisplay = ({ folderPath, onOpenFolder, onChangePath }: FolderPathDisplayProps) => {
   return (
     <div className="mb-3 rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
       <p className="text-sm text-gray-700">현재 선택된 폴더 경로:</p>

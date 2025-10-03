@@ -8,21 +8,24 @@ import { MdOutlineStorage } from "react-icons/md";
 import { MdAutorenew } from "react-icons/md";
 import { PiSubtitlesFill } from "react-icons/pi";
 import { RiCloseLargeLine } from "react-icons/ri";
-
 import { useParams } from "react-router-dom";
+
 import ErrorModal from "@/components/ErrorModal";
 import Loading from "@/components/Loading";
+import type { LinkItem } from "@/types/link";
 import formatFileSize from "@/utils/formatFileSize";
 import fullUrl from "@/utils/fullUrl";
 
 const LinkDetail = () => {
   const { uniqueUrl } = useParams();
-  const [link, setLink] = useState(null);
+  const [link, setLink] = useState<LinkItem | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = () => {
+  const handleCopy = (): void => {
+    if (!link) return;
+
     navigator.clipboard
       .writeText(fullUrl(link.uniqueUrl))
       .then(() => {
@@ -36,6 +39,12 @@ const LinkDetail = () => {
 
   useEffect(() => {
     const fetchLink = async () => {
+      if (!uniqueUrl) {
+        setError("잘못된 링크입니다.");
+        setLoading(false);
+        return;
+      }
+
       try {
         const result = await window.api.getLinkByUniqueUrl(uniqueUrl);
         if (!result) {

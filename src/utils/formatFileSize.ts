@@ -1,4 +1,4 @@
-export default function formatFileSize(bytes) {
+export default function formatFileSize(bytes: number): string {
   if (bytes >= 1024 ** 3) {
     return (bytes / 1024 ** 3).toFixed(1) + "GB";
   } else if (bytes >= 1024 ** 2) {

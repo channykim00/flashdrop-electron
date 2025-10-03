@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+
 import DeletePrompt from "@/components/DeletePrompt";
 import dateFormat from "@/utils/dateFormat";
 import formatFileSize from "@/utils/formatFileSize";
 
 const FileHistory = () => {
-  const [files, setFiles] = useState([]);
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const [targetFile, setTargetFile] = useState(null);
-  const [highlightedId, setHighlightedId] = useState(null);
+  const [files, setFiles] = useState<FileHistoryItem[]>([]);
+  const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
+  const [targetFile, setTargetFile] = useState<FileHistoryItem | null>(null);
+  const [highlightedId, setHighlightedId] = useState<string | null>(null);
 
   const location = useLocation();
 
@@ -107,8 +108,13 @@ const FileHistory = () => {
                         </span>
                       )}
                     </td>
-                    <td className="px-3 py-2">{file.originalFilename}</td>
-                    <td className="px-3 py-2">{formatFileSize(file.size)}</td>
+                    <td
+                      className="max-w-[160px] truncate px-3 py-2 text-xs"
+                      title={file.originalFilename}
+                    >
+                      {file.originalFilename}
+                    </td>
+                    <td className="px-3 py-2 text-xs">{formatFileSize(file.size)}</td>
                     <td className="px-3 py-2 text-xs">{file.savedDirectory}</td>
                     <td className="px-3 py-2 text-xs">{dateFormat(file.downloadTime)}</td>
                     <td className="px-3 py-2">

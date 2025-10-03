@@ -1,5 +1,6 @@
-export const CLIENT_URL = "http://localhost:5173";
-export const API_URL = "http://localhost:4000";
+export const CLIENT_URL = "https://flash-drop.online";
+export const API_URL = "https://flash-drop.xyz";
+export const DEV_API_URL = "http://localhost:4000";
 export const DEV_SERVER_URL = "http://localhost:5123";
 
 export const FILE_TYPE_OPTIONS = [

@@ -2,8 +2,8 @@ import { BsInboxesFill } from "react-icons/bs";
 import { RiFolderDownloadFill } from "react-icons/ri";
 import { TbBinaryTree2 } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
-import logo from "@/assets/logo.png";
 
+import logo from "@/assets/logo.png";
 import useUploadRequestStore from "@/stores/useUploadRequestStore";
 
 const Sidebar = () => {

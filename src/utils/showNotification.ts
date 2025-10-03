@@ -1,4 +1,6 @@
-const showNotification = (title, message, handleClick) => {
+type ClickHandler = () => void;
+
+const showNotification = (title: string, message: string, handleClick?: ClickHandler) => {
   const notification = new Notification(title, { body: message });
 
   notification.onclick = () => {

@@ -1,6 +1,13 @@
 import { IoWarning } from "react-icons/io5";
 
-const DeletePrompt = ({ title, message, onCancel, onDelete }) => {
+interface DeletePromptProps {
+  title: string;
+  message: string;
+  onCancel: () => void;
+  onDelete: () => void;
+}
+
+const DeletePrompt = ({ title, message, onCancel, onDelete }: DeletePromptProps) => {
   return (
     <div>
       <div

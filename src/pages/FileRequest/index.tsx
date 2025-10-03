@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BsInboxesFill } from "react-icons/bs";
+
 import DeletePrompt from "@/components/DeletePrompt";
 import { API_URL } from "@/constants";
 import useUploadRequestStore from "@/stores/useUploadRequestStore";
@@ -65,47 +66,58 @@ const FileRequest = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 text-center">
-                {requests.map((requests) => (
-                  <tr
-                    className="hover:bg-gray-50"
-                    key={requests.fileId}
-                  >
-                    <td className="px-2 py-4 text-xs">
-                      {requests.senderName ? (
-                        <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset">
-                          {requests.senderName}
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600/10 ring-inset">
-                          없음
-                        </span>
-                      )}
-                    </td>
-                    <td className="px-2 py-4 font-medium text-gray-900">{requests.filename}</td>
-                    <td className="px-2 py-4 text-xs">{formatFileSize(requests.size)}</td>
-                    <td className="px-2 py-4 text-xs">{requests.title}</td>
-                    <td className="px-2 py-4 text-xs">{dateFormat(requests.startedAt)}</td>
-                    <td className="px-2 py-4">
-                      <div className="flex justify-end gap-2">
-                        <button
-                          className="cursor-pointer rounded-lg border border-gray-300 px-3 py-1 text-xs text-gray-600 transition hover:bg-gray-100"
-                          onClick={() => {
-                            setTargetRequest(requests);
-                            setIsDeleteOpen(true);
-                          }}
-                        >
-                          거절
-                        </button>
-                        <button
-                          className="bg-dodger-blue-500 hover:bg-dodger-blue-600 cursor-pointer rounded-lg px-3 py-1 text-xs font-semibold text-white shadow transition"
-                          onClick={() => handleAcceptFile(requests)}
-                        >
-                          수락
-                        </button>
-                      </div>
+                {requests.length === 0 ? (
+                  <tr>
+                    <td
+                      colSpan="6"
+                      className="py-10 text-gray-500"
+                    >
+                      요청된 파일이 없습니다.
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  requests.map((request) => (
+                    <tr
+                      className="hover:bg-gray-50"
+                      key={request.fileId}
+                    >
+                      <td className="px-2 py-4 text-xs">
+                        {request.senderName ? (
+                          <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset">
+                            {request.senderName}
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-red-600/10 ring-inset">
+                            없음
+                          </span>
+                        )}
+                      </td>
+                      <td className="px-2 py-4 font-medium text-gray-900">{request.filename}</td>
+                      <td className="px-2 py-4 text-xs">{formatFileSize(request.size)}</td>
+                      <td className="px-2 py-4 text-xs">{request.title}</td>
+                      <td className="px-2 py-4 text-xs">{dateFormat(request.startedAt)}</td>
+                      <td className="px-2 py-4">
+                        <div className="flex justify-end gap-2">
+                          <button
+                            className="cursor-pointer rounded-lg border border-gray-300 px-3 py-1 text-xs text-gray-600 transition hover:bg-gray-100"
+                            onClick={() => {
+                              setTargetRequest(request);
+                              setIsDeleteOpen(true);
+                            }}
+                          >
+                            거절
+                          </button>
+                          <button
+                            className="bg-dodger-blue-500 hover:bg-dodger-blue-600 cursor-pointer rounded-lg px-3 py-1 text-xs font-semibold text-white shadow transition"
+                            onClick={() => handleAcceptFile(request)}
+                          >
+                            수락
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>

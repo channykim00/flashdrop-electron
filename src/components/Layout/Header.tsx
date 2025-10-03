@@ -2,17 +2,27 @@ import { useEffect, useState, useCallback } from "react";
 import { FaSearch } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+
 import useSearchStore from "@/stores/searchStore";
+
+type FilterOptionType = "title" | "file" | "sender";
+
+type SearchResult = {
+  uniqueUrl?: string;
+  title?: string;
+  fileId?: string;
+  originalFilename?: string;
+  senderName?: string;
+};
 
 const Header = () => {
   const navigate = useNavigate();
-
   const { filterBy, setFilterBy, query, setQuery, results, setResults } = useSearchStore();
 
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [showResults, setShowResults] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
+  const [showResults, setShowResults] = useState<boolean>(false);
 
-  const filterOptions = [
+  const filterOptions: { value: FilterOptionType; label: string }[] = [
     { value: "title", label: "링크 제목" },
     { value: "file", label: "파일명" },
     { value: "sender", label: "보낸이" },
@@ -25,7 +35,7 @@ const Header = () => {
     }
 
     try {
-      let matchedResults = [];
+      let matchedResults: SearchResult[] = [];
       if (filterBy === "title") {
         matchedResults = await window.api.searchLinksByTitle(query);
       } else if (filterBy === "file") {
@@ -86,34 +96,36 @@ const Header = () => {
                     key={index}
                     className="cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     onClick={() => {
-                      if (filterBy === "title") {
+                      if ("uniqueUrl" in result) {
                         navigate("/linkManagement", {
                           state: { openId: result.uniqueUrl },
                         });
-                      }
-                      if (filterBy === "file" || filterBy === "sender") {
-                        navigate("/fileHistory", { state: { highlightFileId: result.fileId } });
+                      } else if ("fileId" in result) {
+                        navigate("/fileHistory", {
+                          state: { highlightFileId: result.fileId },
+                        });
                       }
                     }}
                   >
-                    {filterBy === "title" && (
+                    {"title" in result && filterBy === "title" && (
                       <span className="me-2 rounded-sm border border-blue-400 bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:text-blue-400">
                         링크 제목
                       </span>
                     )}
-                    {filterBy === "sender" && (
+                    {"senderName" in result && filterBy === "sender" && (
                       <span className="me-2 rounded-sm border border-indigo-400 bg-indigo-100 px-2.5 py-0.5 text-xs font-medium text-indigo-800 dark:text-indigo-400">
                         보낸이
                       </span>
                     )}
-                    {filterBy === "file" && (
+                    {"originalFilename" in result && filterBy === "file" && (
                       <span className="me-2 rounded-sm border border-green-400 bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-gray-700 dark:text-green-400">
                         파일
                       </span>
                     )}
-                    {filterBy === "title" && result.title}
-                    {filterBy === "file" && result.originalFilename}
-                    {filterBy === "sender" && result.senderName}
+
+                    {"title" in result && filterBy === "title" && result.title}
+                    {"originalFilename" in result && filterBy === "file" && result.originalFilename}
+                    {"senderName" in result && filterBy === "sender" && result.senderName}
                   </li>
                 ))}
               </ul>
@@ -135,7 +147,7 @@ const Header = () => {
             <div
               className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
               role="menu"
-              tabIndex="-1"
+              tabIndex={-1}
             >
               <div
                 className="py-1"

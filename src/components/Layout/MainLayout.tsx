@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+
 import Header from "./Header";
 import Sidebar from "./Sidebar";
+
 import useDeviceStore from "@/stores/deviceStore";
 import useUploadRequestStore from "@/stores/useUploadRequestStore";
 import showNotification from "@/utils/showNotification.js";
@@ -20,7 +22,7 @@ const MainLayout = () => {
       });
     };
 
-    const handleAuto = (event, data) => {
+    const handleAuto = (_event: unknown, data: AutoUploadData) => {
       showNotification("다운로드 진행중", `${data.filename}을 다운로드 중입니다.`, () => {
         navigate("/fileHistory");
       });
