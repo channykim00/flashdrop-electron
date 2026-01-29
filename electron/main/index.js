@@ -5,13 +5,13 @@ import { fileURLToPath } from "url";
 import { app, BrowserWindow, ipcMain, dialog, shell } from "electron";
 import { io } from "socket.io-client";
 
+import { API_URL, DEV_SERVER_URL } from "../config/constants.js";
 import downloadStore from "../utils/downloadStore.js";
 import { isDev } from "../utils/isDev.js";
 import linkStore from "../utils/linkStore.js";
 import startFileSync from "../utils/startFileSync.js";
 import uploadRequestStore from "../utils/uploadRequestStore.js";
 
-import { API_URL, DEV_SERVER_URL } from "./constants.js";
 import { getOrCreateDeviceId } from "./deviceId.js";
 import { handleChunkReceive } from "./handlers/fileReceiver.js";
 
