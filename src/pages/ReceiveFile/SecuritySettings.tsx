@@ -3,12 +3,22 @@ import { MdOutlineSecurity } from "react-icons/md";
 
 import useLinkStore from "@/stores/linkStore";
 
-const SecuritySettings = () => {
+interface SecuritySettingsProps {
+  settings?: any;
+  onChange?: (_settings: any) => void;
+}
+
+const SecuritySettings = ({ settings: _settings, onChange: _onChange }: SecuritySettingsProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
-  const { securitySettings, setSecuritySettings } = useLinkStore();
 
-  const handleChange = (field, value) => {
+  const storeSecuritySettings = useLinkStore((state) => state.securitySettings);
+  const storeSetSecuritySettings = useLinkStore((state) => state.setSecuritySettings);
+
+  const securitySettings = _settings || storeSecuritySettings;
+  const setSecuritySettings = _onChange || storeSetSecuritySettings;
+
+  const handleChange = (field: string, value: any) => {
     setSecuritySettings({ ...securitySettings, [field]: value });
   };
 

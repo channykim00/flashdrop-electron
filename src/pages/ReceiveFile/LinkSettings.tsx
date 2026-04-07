@@ -3,10 +3,19 @@ import { GiSettingsKnobs } from "react-icons/gi";
 import { FILE_TYPE_OPTIONS } from "@/constants";
 import useLinkStore from "@/stores/linkStore";
 
-const LinkSettings = () => {
-  const { linkSettings, setLinkSettings } = useLinkStore();
+interface LinkSettingsProps {
+  settings?: any;
+  onChange?: (_settings: any) => void;
+}
 
-  const handleChange = (field, value) => {
+const LinkSettings = ({ settings: _settings, onChange: _onChange }: LinkSettingsProps) => {
+  const storeLinkSettings = useLinkStore((state) => state.linkSettings);
+  const storeSetLinkSettings = useLinkStore((state) => state.setLinkSettings);
+
+  const linkSettings = _settings || storeLinkSettings;
+  const setLinkSettings = _onChange || storeSetLinkSettings;
+
+  const handleChange = (field: string, value: any) => {
     setLinkSettings({ ...linkSettings, [field]: value });
   };
 

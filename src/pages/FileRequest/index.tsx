@@ -3,6 +3,7 @@ import { BsInboxesFill } from "react-icons/bs";
 
 import DeletePrompt from "@/components/DeletePrompt";
 import { API_URL } from "@/constants";
+import type { UploadRequest } from "@/global";
 import useUploadRequestStore from "@/stores/useUploadRequestStore";
 import dateFormat from "@/utils/dateFormat";
 import formatFileSize from "@/utils/formatFileSize";
@@ -10,13 +11,13 @@ import formatFileSize from "@/utils/formatFileSize";
 const FileRequest = () => {
   const { requests, removeRequest } = useUploadRequestStore();
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const [targetRequest, setTargetRequest] = useState(null);
+  const [targetRequest, setTargetRequest] = useState<UploadRequest | null>(null);
 
-  const handleAcceptFile = (uploadData) => {
+  const handleAcceptFile = (uploadData: UploadRequest) => {
     window.api.sendAcceptedUpload(uploadData);
     removeRequest(uploadData.fileId);
   };
-  const handleDeclineFile = async (uploadData) => {
+  const handleDeclineFile = async (uploadData: UploadRequest) => {
     try {
       const response = await fetch(`${API_URL}/api/uploaded-file/${uploadData.fileId}`, {
         method: "DELETE",
@@ -39,12 +40,12 @@ const FileRequest = () => {
       {isDeleteOpen && (
         <DeletePrompt
           title="파일 거절"
-          message={`"${targetRequest?.filename}" 파일을 거절하시겠습니까? 다시 다운로드할 수 없습니다.`}
+          message={`"${targetRequest?.fileName}" 파일을 거절하시겠습니까? 다시 다운로드할 수 없습니다.`}
           onCancel={() => {
             setIsDeleteOpen(false);
             setTargetRequest(null);
           }}
-          onDelete={() => handleDeclineFile(targetRequest)}
+          onDelete={() => targetRequest && handleDeclineFile(targetRequest)}
         />
       )}
       <h1 className="flex items-center gap-2 text-2xl font-bold text-gray-800">
@@ -69,7 +70,7 @@ const FileRequest = () => {
                 {requests.length === 0 ? (
                   <tr>
                     <td
-                      colSpan="6"
+                      colSpan={6}
                       className="py-10 text-gray-500"
                     >
                       요청된 파일이 없습니다.
@@ -92,7 +93,7 @@ const FileRequest = () => {
                           </span>
                         )}
                       </td>
-                      <td className="px-2 py-4 font-medium text-gray-900">{request.filename}</td>
+                      <td className="px-2 py-4 font-medium text-gray-900">{request.fileName}</td>
                       <td className="px-2 py-4 text-xs">{formatFileSize(request.size)}</td>
                       <td className="px-2 py-4 text-xs">{request.title}</td>
                       <td className="px-2 py-4 text-xs">{dateFormat(request.startedAt)}</td>

@@ -19,7 +19,7 @@ import { createAppMenu } from "./menu.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.on("ready", () => {
+app.whenReady().then(() => {
   const mainWindow = new BrowserWindow({
     width: 1200,
     height: 550,

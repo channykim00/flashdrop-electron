@@ -8,7 +8,7 @@ import type { LinkData } from "@/types/link";
 interface EditLinkModalProps {
   link: LinkData;
   onClose: () => void;
-  onSave: (updatedLink: LinkData) => void | Promise<void>;
+  onSave: (_updatedLink: LinkData) => void | Promise<void>;
 }
 
 const EditLinkModal = ({ link, onClose, onSave }: EditLinkModalProps) => {

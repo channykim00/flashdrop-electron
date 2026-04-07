@@ -13,6 +13,7 @@ import { CLIENT_URL, API_URL } from "../../constants";
 import DeletePrompt from "@/components/DeletePrompt";
 import SuccessModal from "@/components/SuccessModal";
 import { FILE_TYPE_OPTIONS } from "@/constants";
+import type { LinkItem } from "@/global";
 import EditLinkModal from "@/pages/LinkManagement/EditLinkModal";
 import type { LinkData } from "@/types/link";
 import formatFileSize from "@/utils/formatFileSize";

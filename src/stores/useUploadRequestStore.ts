@@ -1,9 +1,11 @@
 import { create } from "zustand";
 
+import type { UploadRequest } from "@/global";
+
 interface UploadRequestStore {
   requests: UploadRequest[];
-  addRequest: (request: UploadRequest) => void;
-  removeRequest: (fileId: string) => void;
+  addRequest: (_request: UploadRequest) => void;
+  removeRequest: (_fileId: string) => void;
   getLocalRequests: () => Promise<void>;
 }
 

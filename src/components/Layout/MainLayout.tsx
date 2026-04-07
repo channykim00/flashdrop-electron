@@ -6,7 +6,12 @@ import Sidebar from "./Sidebar";
 
 import useDeviceStore from "@/stores/deviceStore";
 import useUploadRequestStore from "@/stores/useUploadRequestStore";
-import showNotification from "@/utils/showNotification.js";
+import showNotification from "@/utils/showNotification";
+
+// Import types
+type AutoUploadData = {
+  filename: string;
+};
 
 const MainLayout = () => {
   const navigate = useNavigate();
@@ -41,10 +46,10 @@ const MainLayout = () => {
         window.api.offAutoAcceptUpload(handleAuto);
       }
     };
-  }, []);
+  }, [getLocalRequests, navigate]);
 
   useEffect(() => {
-    window.api.getDeviceId().then((id) => {
+    window.api.getDeviceId().then((id: string) => {
       setDeviceId(id);
     });
   }, [setDeviceId]);

@@ -14,9 +14,9 @@ interface SearchStore {
   query: string;
   filterBy: FilterOptionType;
   results: SearchResult[];
-  setQuery: (query: string) => void;
-  setFilterBy: (filterBy: FilterOptionType) => void;
-  setResults: (results: SearchResult[]) => void;
+  setQuery: (_query: string) => void;
+  setFilterBy: (_filterBy: FilterOptionType) => void;
+  setResults: (_results: SearchResult[]) => void;
 }
 
 const useSearchStore = create<SearchStore>((set) => ({

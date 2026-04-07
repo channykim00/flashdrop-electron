@@ -12,8 +12,8 @@ import useLinkStore from "@/stores/linkStore";
 
 const ReceiveFile = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState(null);
-  const [successLinkUrl, setSuccessLinkUrl] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+  const [successLinkUrl, setSuccessLinkUrl] = useState<string | null>(null);
 
   const {
     folderPath,
@@ -38,7 +38,7 @@ const ReceiveFile = () => {
         setFolderPath(path);
       }
     } catch (err) {
-      setError(err.message || "폴더를 여는 중 문제가 발생했습니다.");
+      setError((err as Error).message || "폴더를 여는 중 문제가 발생했습니다.");
     }
   };
 
@@ -50,7 +50,7 @@ const ReceiveFile = () => {
 
   const handleCreateLink = async () => {
     try {
-      const selectedGroup = linkSettings.allowedFileTypes;
+      const selectedGroup = linkSettings.allowedFileTypeGroup;
 
       const payload = {
         deviceId,
@@ -83,7 +83,7 @@ const ReceiveFile = () => {
         setSuccessLinkUrl(linkToSave.uniqueUrl);
       }
     } catch (err) {
-      setError(err.message || "링크 생성 중 문제가 발생했습니다.");
+      setError((err as Error).message || "링크 생성 중 문제가 발생했습니다.");
     }
   };
 

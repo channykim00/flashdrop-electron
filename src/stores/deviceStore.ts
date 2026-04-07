@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 interface DeviceStore {
   deviceId: string | null;
-  setDeviceId: (id: string) => void;
+  setDeviceId: (_id: string) => void;
 }
 
 const useDeviceStore = create<DeviceStore>((set) => ({

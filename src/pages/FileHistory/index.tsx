@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import DeletePrompt from "@/components/DeletePrompt";
+import type { FileHistoryItem } from "@/global";
 import dateFormat from "@/utils/dateFormat";
 import formatFileSize from "@/utils/formatFileSize";
 

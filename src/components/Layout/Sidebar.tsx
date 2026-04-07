@@ -3,6 +3,7 @@ import { RiFolderDownloadFill } from "react-icons/ri";
 import { TbBinaryTree2 } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 
+// @ts-ignore
 import logo from "@/assets/logo.png";
 import useUploadRequestStore from "@/stores/useUploadRequestStore";
 
