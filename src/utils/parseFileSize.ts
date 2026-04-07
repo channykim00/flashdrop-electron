@@ -1,5 +1,5 @@
-export default function parseFileSize(stringSize) {
-  const units = {
+export default function parseFileSize(stringSize: string): number {
+  const units: Record<string, number> = {
     MB: 1024 * 1024,
     GB: 1024 * 1024 * 1024,
   };
