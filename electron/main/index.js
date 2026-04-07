@@ -14,6 +14,7 @@ import uploadRequestStore from "../utils/uploadRequestStore.js";
 
 import { getOrCreateDeviceId } from "./deviceId.js";
 import { handleChunkReceive } from "./handlers/fileReceiver.js";
+import { createAppMenu } from "./menu.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,6 +30,8 @@ app.on("ready", () => {
       sandbox: false,
     },
   });
+
+  createAppMenu();
 
   const socket = io(API_URL);
 

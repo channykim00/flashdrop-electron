@@ -18,9 +18,9 @@ contextBridge.exposeInMainWorld("api", {
   deleteDownloadHistory: (fileId) => ipcRenderer.invoke("delete-download-history", fileId),
 
   onAutoAcceptUpload: (callback) => ipcRenderer.on("auto-accept-upload", callback),
-  onShowUploadAccept: (callback) => ipcRenderer.on("show-upload-accept", callback),
-
   offAutoAcceptUpload: (callback) => ipcRenderer.removeListener("auto-accept-upload", callback),
+
+  onShowUploadAccept: (callback) => ipcRenderer.on("show-upload-accept", callback),
   offShowUploadAccept: (callback) => ipcRenderer.removeListener("show-upload-accept", callback),
 
   sendAcceptedUpload: (uploadData) => ipcRenderer.send("accept-upload", { uploadData }),
