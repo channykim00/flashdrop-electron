@@ -1,13 +1,11 @@
 import fs from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
 
-import { app, BrowserWindow, ipcMain, dialog, shell } from "electron";
+import { app, ipcMain, dialog, shell } from "electron";
 import { io } from "socket.io-client";
 
-import { API_URL, DEV_SERVER_URL } from "../config/constants.js";
+import { API_URL } from "../config/constants.js";
 import downloadStore from "../utils/downloadStore.js";
-import { isDev } from "../utils/isDev.js";
 import linkStore from "../utils/linkStore.js";
 import startFileSync from "../utils/startFileSync.js";
 import uploadRequestStore from "../utils/uploadRequestStore.js";
@@ -15,22 +13,10 @@ import uploadRequestStore from "../utils/uploadRequestStore.js";
 import { getOrCreateDeviceId } from "./deviceId.js";
 import { handleChunkReceive } from "./handlers/fileReceiver.js";
 import { createAppMenu } from "./menu.js";
+import { createMainWindow } from "./windows/mainWindow.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-app.on("ready", () => {
-  const mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 550,
-    webPreferences: {
-      preload: path.join(__dirname, "../preload/preload.js"),
-      contextIsolation: true,
-      nodeIntegration: false,
-      sandbox: false,
-    },
-  });
-
+app.whenReady().then(() => {
+  const mainWindow = createMainWindow();
   createAppMenu();
 
   const socket = io(API_URL);
@@ -65,12 +51,6 @@ app.on("ready", () => {
   ipcMain.handle("set-upload-requests", (event, requests) => {
     uploadRequestStore.set("uploadRequests", requests);
   });
-
-  if (isDev()) {
-    mainWindow.loadURL(DEV_SERVER_URL);
-  } else {
-    mainWindow.loadFile(path.join(app.getAppPath(), "/dist/index.html"));
-  }
 
   mainWindow.webContents.on("did-finish-load", () => {
     const deviceId = getOrCreateDeviceId();
